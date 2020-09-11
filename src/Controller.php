@@ -3,14 +3,7 @@
 namespace Src;
 
 class Controller
-{
-    public $_config;
-    
-    public function __construct($config)
-    {
-        $this->_config = $config;
-    }
-    
+{    
     public function __toString()
     {
         return get_called_class();
@@ -18,7 +11,7 @@ class Controller
     
     private function getView()
     {
-        return new View($this->_config);
+        return new View;
     }
 
     public function render($view, $params = [])

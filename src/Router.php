@@ -7,14 +7,15 @@ use Exception;
 class Router
 {
     private $_routes = '';
-    
+    private $indexPage = ['App\\Controllers\\SiteController', 'actionIndex'];
+
     /**
      * The main method for parsing an url
      * @return array
      */
     public function parseURL() : array
     {
-        if ($this->_configuration['useUrlParsing']) {
+        if ($GLOBALS['config']['useUrlParsing']) {
             
             /**
              * @todo Create a parsing of url when the index is switched off
@@ -23,6 +24,9 @@ class Router
         } else {
             try {
                 $this->_routes = $this->parseParams();
+                
+                if (!$this->_routes) return $this->indexPage;
+                
                 $path = explode('/', $this->_routes['r']);
                 $controller = 'App\\Controllers\\'.ucfirst($path[0]) . 'Controller';
                 $action = 'action'. ucfirst($path[1]);

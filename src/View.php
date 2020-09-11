@@ -5,12 +5,6 @@ namespace Src;
 class View
 {
     public $layout = 'main';
-    private $_config;
-    
-    public function __construct($config)
-    {
-        $this->_config = $confit;
-    }
     
     /**
      * A view file is rendered with a layout file
@@ -22,7 +16,7 @@ class View
     public function renderWithLayout($view, $params = [], $object)
     {
         $content = $this->renderFile($view, $params, $object);
-        return $this->renderFile(($object->_config)['viewPath'] .'layouts/'. $this->layout, ['content' => $content]);
+        return $this->renderFile($GLOBALS['config']['viewPath'] .'layouts/'. $this->layout, ['content' => $content]);
     }
     
     /**
@@ -44,7 +38,7 @@ class View
                 require_once $view .'.php';
             } else {
                 $controller = lcfirst(preg_replace('#Controller#', '', (new \ReflectionClass($object))->getShortName()));
-                require_once ($object->_config)['viewPath'] . $controller .'/'. $view . '.php';
+                require_once $GLOBALS['config']['viewPath'] . $controller .'/'. $view . '.php';
             }
             return ob_get_clean();
         } catch (\Exception $e) {

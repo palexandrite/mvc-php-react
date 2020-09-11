@@ -3,14 +3,7 @@
 namespace Src;
 
 class Application
-{
-    public $_config;
-
-    public function __construct($config)
-    {
-        $this->_config = $config;
-    }
-    
+{    
     public function run()
     {
         try {
@@ -24,7 +17,7 @@ class Application
                 Router::ErrorPage404();
             }
             
-            $result = (new $controller($this->_config))->$action();
+            $result = (new $controller)->$action();
                 
             View::renderText($result);
             
